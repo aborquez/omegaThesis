@@ -1,12 +1,12 @@
 /*****************************************/
 /*  FilterNCombine.cxx                   */
 /*                                       */
-/*  Andrés Bórquez                       */
+/*  Author: Andrés Bórquez               */
 /*                                       */
 /*****************************************/
 
 // UPDATE:
-// - added RN option
+// - added proper photons energy corrections
 
 #include "analysisConfig.h"
 
@@ -22,6 +22,7 @@ Int_t   simFlag = 0;
 TString setOption;
 TString NjlabDir;
 TString rnOption;
+TString analyserOption; // new, for photon's energy correction
 
 TString treeName;
 
@@ -67,6 +68,7 @@ void printUsage();
 void assignOptions();
 void printOptions();
 
+Float_t CorrectGammaEnergy(Float_t fE); // it also depends on a global variable called "analyserOption"
 Float_t CorrectGammaMomentum(Int_t i); // i stands for component
 Float_t PhiPQ(Float_t fPx, Float_t fPy, Float_t fPz);
 Float_t ThetaPQ(Float_t fPx, Float_t fPy, Float_t fPz);
@@ -476,19 +478,19 @@ int main(int argc, char **argv) {
   // on the loop
   Int_t start, finish;
   if (!simFlag) {
-    start = t->GetMinimum(eventBranchName);
-    finish = t->GetMaximum(eventBranchName);
+    start = (Int_t) t->GetMinimum(eventBranchName);
+    finish = (Int_t) t->GetMaximum(eventBranchName);
   } else if (simFlag) {
     start = 0;
-    finish = t->GetMaximum(eventBranchName);
+    finish = (Int_t) t->GetMaximum(eventBranchName);
   }
   
   // loop in events
   // i = event number
   for (Int_t i = start; i <= finish; i++) { // t->GetMinimum(eventBranchName), t->GetMaximum(eventBranchName)
     
-    // std::cout << "Current event number: " << i << std::endl;
-    // std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+    std::cout << "Current event number: " << i << std::endl;
+    std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
     
     TString theCondition;
     TString listName = Form("elist_%d", i);
@@ -506,10 +508,10 @@ int main(int argc, char **argv) {
     for (Int_t j = 0; j < (Int_t) l->GetN(); j++) {
       Int_t jj = t->GetEntryNumber(j);
       t->GetEntry(jj);
-      //std::cout << "  Entry number: " << jj << std::endl;
-      //std::cout << "  pid:          " << tPid << std::endl;
-      //std::cout << "  mc_pid:       " << tmc_Pid << std::endl;
-      //std::cout << "  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
+      std::cout << "  Entry number: " << jj << std::endl;
+      std::cout << "  pid:          " << tPid << std::endl;
+      std::cout << "  mc_pid:       " << tmc_Pid << std::endl;
+      std::cout << "  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
       // count the data/simrec particles
       if (tPid == (Float_t) 211) nPipThisEvent++;
       if (tPid == (Float_t) -211) nPimThisEvent++;
@@ -521,13 +523,13 @@ int main(int argc, char **argv) {
     }
     
     // show counts
-    //std::cout << "  nPip     = " << nPipThisEvent << std::endl;
-    //std::cout << "  nPim     = " << nPimThisEvent << std::endl;
-    //std::cout << "  nGamma   = " << nGammaThisEvent << std::endl;
-    //std::cout << "  nMCPip   = " << nMCPipThisEvent << std::endl;
-    //std::cout << "  nMCPim   = " << nMCPimThisEvent << std::endl;
-    //std::cout << "  nMCGamma = " << nMCGammaThisEvent << std::endl;
-    //std::cout << "  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
+    std::cout << "  nPip     = " << nPipThisEvent << std::endl;
+    std::cout << "  nPim     = " << nPimThisEvent << std::endl;
+    std::cout << "  nGamma   = " << nGammaThisEvent << std::endl;
+    std::cout << "  nMCPip   = " << nMCPipThisEvent << std::endl;
+    std::cout << "  nMCPim   = " << nMCPimThisEvent << std::endl;
+    std::cout << "  nMCGamma = " << nMCGammaThisEvent << std::endl;
+    std::cout << "  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
 
     // (as you can see, these conditions are not exclusive)
     // candidate appeared for data/simrec
@@ -544,10 +546,10 @@ int main(int argc, char **argv) {
       nMCOmega += nMCCombThisEvent;
     }
 
-    //std::cout << "  There are " << nCombThisEvent << " omegas!" << std::endl;
-    //std::cout << "  There are " << nCombThisEvent << " reconstructed omegas!" << std::endl;
-    //std::cout << "  There are " << nMCCombThisEvent << " generated omegas!" << std::endl;
-    //std::cout << "  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
+    std::cout << "  There are " << nCombThisEvent << " omegas!" << std::endl;
+    std::cout << "  There are " << nCombThisEvent << " reconstructed omegas!" << std::endl;
+    std::cout << "  There are " << nMCCombThisEvent << " generated omegas!" << std::endl;
+    std::cout << "  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
 
     /*** ORIGINAL ***/
 
@@ -564,7 +566,7 @@ int main(int argc, char **argv) {
 
 	// assigning energy
 	// for simrec
-	if (tPid == 22) oE = tE/0.272;
+	if (tPid == 22) oE = CorrectGammaEnergy(tE);
 	else if (tPid == 211 || tPid == -211) oE = TMath::Sqrt(tPx*tPx + tPy*tPy + tPz*tPz + kMpi*kMpi);
 	// for gsim
 	if (tmc_Pid == 22 || tmc_Pid == 211 || tmc_Pid == -211) oE = tmc_E;
@@ -857,13 +859,13 @@ int main(int argc, char **argv) {
       
     // PART 3: fill
 
-    //std::cout << "  candidates for data:" << std::endl;
-    //for (Int_t c = 0; c < nCombThisEvent; c++) std::cout << "  {" << combVector[c][0] << ", " << combVector[c][1] << ", "  << combVector[c][2] << ", " << combVector[c][3] << "}" << std::endl;
-    //std::cout << "  candidates for simrec:" << std::endl;
-    //for (Int_t c = 0; c < nCombThisEvent; c++) std::cout << "  {" << combVector[c][0] << ", " << combVector[c][1] << ", "  << combVector[c][2] << ", " << combVector[c][3] << "}" << std::endl;
-    //std::cout << "  candidates for gsim:" << std::endl;
-    //for (Int_t c = 0; c < nMCCombThisEvent; c++) std::cout << "  {" << mc_combVector[c][0] << ", " << mc_combVector[c][1] << ", "  << mc_combVector[c][2] << ", " << mc_combVector[c][3] << "}" << std::endl;
-    //std::cout << "  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
+    std::cout << "  candidates for data:" << std::endl;
+    for (Int_t c = 0; c < nCombThisEvent; c++) std::cout << "  {" << combVector[c][0] << ", " << combVector[c][1] << ", "  << combVector[c][2] << ", " << combVector[c][3] << "}" << std::endl;
+    std::cout << "  candidates for simrec:" << std::endl;
+    for (Int_t c = 0; c < nCombThisEvent; c++) std::cout << "  {" << combVector[c][0] << ", " << combVector[c][1] << ", "  << combVector[c][2] << ", " << combVector[c][3] << "}" << std::endl;
+    std::cout << "  candidates for gsim:" << std::endl;
+    for (Int_t c = 0; c < nMCCombThisEvent; c++) std::cout << "  {" << mc_combVector[c][0] << ", " << mc_combVector[c][1] << ", "  << mc_combVector[c][2] << ", " << mc_combVector[c][3] << "}" << std::endl;
+    std::cout << "  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
 
     // extract
     for (Int_t cc = 0; cc < TMath::Max(nCombThisEvent, nMCCombThisEvent); cc++) { // loop on combinations
@@ -920,10 +922,10 @@ int main(int argc, char **argv) {
 	  nPip = -9999.;
 	  nPim =-9999.;
 	  nGamma = -9999.;
-	} else { // simrec/data not null
+	} else { // data/simrec not null
 	  t->GetEntry(combVector[cc][pp]);
 	  if (pp < 2) { // gammas
-	    mE[pp] = tE/0.272;                 // primitive sampling fraction
+	    mE[pp] = CorrectGammaEnergy(tE); // correction
 	    mPx[pp] = CorrectGammaMomentum(0); // correction
 	    mPy[pp] = CorrectGammaMomentum(1); // correction
 	    mPz[pp] = CorrectGammaMomentum(2); // correction
@@ -1132,6 +1134,7 @@ int main(int argc, char **argv) {
 
     // for data
     if (!simFlag) {
+      if (i == (Int_t) t->GetMaximum(eventBranchName)) break; // break infinite loop
       t->GetEntry(ii+1); // stand in first entry of the next event
       i = (Int_t) tEvent - 1; // jump to next event number
     }
@@ -1140,7 +1143,7 @@ int main(int argc, char **argv) {
     gDirectory->Delete(listName + ";1");
     rootFile->Delete(listName);
     
-    //std::cout << std::endl;
+    std::cout << std::endl;
   } // end of loop in events
 
   /*** Writing tree ***/
@@ -1202,6 +1205,8 @@ void assignOptions() {
     inputFile = proDir + "/out/prunedData/" + targetOption + "/pruned_data_" + rnOption + ".root"; // new
     // out
     outDir = dataDir + "/" + targetOption;
+    // new!
+    analyserOption = targetOption;
   } else if (simFlag) {
     // ntuple name
     treeName = "ntuple_sim";
@@ -1212,6 +1217,8 @@ void assignOptions() {
     // out
     outDir = simDir + "/" + setOption + "/" + targetOption;
     if (setOption == "jlab") outDir += "/" + NjlabDir;
+    // new!
+    analyserOption = "Sim";
   }
   // regardless of the data type
   outFile = outDir + "/comb_" + setOption + targetOption + "_" + rnOption + ".root";
@@ -1219,7 +1226,10 @@ void assignOptions() {
 
 void printUsage() {
   std::cout << "FilterNCombine program." << std::endl;
-  std::cout << "It must exist a file /tmp/PRU-[set]-[target]-[rn].tmp with the location of the input root file to filter." << std::endl;
+  std::cout << "The input file should have this name scheme: " << std::endl;
+  std::cout << "    for data     = out/prunedData/[target]/pruned_data_[rn].root" << std::endl;
+  std::cout << "    for old/usm  = out/prunedSim/[set]/[target]/pruned_sim[target]_[rn].root" << std::endl;
+  std::cout << "    for jlab     = out/prunedSim/jlab/[target]/[ndir]/pruned_sim[target]_[rn].root" << std::endl;
   std::cout << "Usage is:" << std::endl;
   std::cout << std::endl;
   std::cout << "./FilterNCombine -h" << std::endl;
@@ -1253,10 +1263,30 @@ void printOptions() {
   std::cout << "  NjlabDir       = " << NjlabDir << std::endl;
   std::cout << "  rnOption       = " << rnOption << std::endl;
   std::cout << "  inputFile      = " << inputFile << std::endl;
+  std::cout << "  setOption      = " << setOption << std::endl;
   std::cout << std::endl;
 }
 
 /*** Mathematical functions ***/
+
+Float_t CorrectGammaEnergy(Float_t fE) {
+  // returns the respective corrected energy
+  // thanks to (Taisiya Mineeva - CLAS Analysis Note)
+
+  Float_t corrFactor;
+  if (analyserOption == "C" || analyserOption == "Pb") {
+    fE = fE/0.272; // primitive sampling fraction
+    corrFactor = 1.129 - 0.05793/fE - 1.0773e-12/(fE*fE);
+  } else if (analyserOption == "Fe") {
+    fE = fE/0.272; // primitive sampling fraction
+    corrFactor = 1.116 - 0.09213/fE + 0.01007/(fE*fE);
+  } else if (analyserOption == "Sim") {
+    fE = fE/0.2806; // primitive sampling fraction for sim
+    corrFactor = 1.000 + 0.005/fE - 0.0052/(fE*fE);
+  }
+
+  return fE/corrFactor;
+}
 
 Float_t CorrectGammaMomentum(Int_t i) {
   // returns the respective corrected momentum component
