@@ -1,0 +1,189 @@
+\chapter{Event Selection}
+
+All particles are organized in rows and we gather information for all detectors banks.
+
+\section{Electron identification}
+
+The detected particle is identified as an electron if it satisfies the following requeriments.
+
+\textbf{Charge.} Must be -1.
+
+\textbf{Regarding the banks.} EVNT status is between 0 and 100. And the number of rows found in the CCPB, ECPB, SCPB banks is different from 0 and their respective status above 0.
+
+\textbf{Momentum.} Orlando says that it should be $P > 0.75$, because momentum trigger? Which is in agreement with Taya's AN for the DIS cuts (and the $y < 0.85$ cut). Mike agree with $P > 0.64$. I think all three researches agree here.
+
+\textbf{Inner stack energy cut.} All three researches agree with $E_{in} > 0.06$ and $E_{out} > 0$ .
+	    
+\textbf{EC Fiducial cut.} Orlando proposes a target and sector dependent EC fiducial cut. While Taya and Mike propose a simpler one.
+\begin{equation}
+    40 < U < 400, \quad 0 < V < 360, \quad 0 < W < 390 \, (\mbox{cm})
+\end{equation}
+
+\textbf{EC and SC coincidence time.} Where $c = 30$ (cm/ns) and $\sigma = 0.35$ (ns). Mike proposed $3\sigma$. And Taya uses a different approximation.
+\begin{equation}
+    \left| t_{EC} - \left( t_{SC} - \frac{l_{EC} - l_{SC}}{c} \right) \right| < 5 \, \sigma (\mbox{ns})   
+\end{equation}
+
+\textbf{Number of CC photoelectrons detected.} Default by Hayk.
+\begin{equation}
+    N_{phe} > 25
+\end{equation}
+
+\textbf{Number of CC photoelectrons detected.} Default by Mike.
+\begin{equation}
+    N_{phe} > 28
+\end{equation}
+
+\textbf{Number of CC photoelectrons detected.} Orlando modification is sector dependent. Just as Taya's work.
+\begin{itemize}
+    \item For sectors 0 and 1, $N_{phe} > 25$.
+    \item For sector 2, $N_{phe} > 26$.
+    \item For sector 3, $N_{phe} > 21$.
+    \item For sectors 4 and 5, $N_{phe} > 28$.
+\end{itemize}
+
+\textbf{Sampling Fraction cut.} This is a cut of $2.5 \sigma$ around sampling fraction fit, just as Taya's thesis. I believe Orlando uses the same one. Sector and target dependent.
+\begin{equation}
+    \left| \frac{E_{tot}}{P} - \mu(P) \right| > 2.5 \, \sigma(P)
+\end{equation}
+
+\textbf{What are those?}
+\begin{equation}
+	\frac{E_{tot}}{0.27 \times 1.15} - 0.2 < P < \frac{E_{tot}}{0.27 \times 1.15} + 0.4
+\end{equation}
+\begin{equation}
+    0.8 \times 0.27 \times P < E_{in} + E_{out} < 1.2 \times 0.27 \times P
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{$\pi^{+}$ identification}
+
+All $\pi^{+}$ must satisfy the following requeriments:
+
+\textbf{Charge.} Must be 1.
+
+\textbf{Banks status.} Should be detected in EVNT and DCPB. (Status above 0)
+
+\textbf{High energy $\pi^+$.} Should have $P \ge 2.7$. CC status above 0. $N_{phe} > 25$ and $\chi^2 < 5/57.3$
+                        
+\textbf{Low energy $\pi^+$.} It has a (very strict) momentum dependent identification. It should exist a valid SC status. It is categorized as a low energy $\pi^+$ if it satisfies any of these.
+\begin{itemize}
+    \item $0.0 < P \le 0.25$ and $-1.45 \le \beta < 1.05$
+    \item $0.25 < P \le 0.5$ and $-1.44 \le \beta < 1.05$
+    \item $0.5 < P \le 0.75$ and $-1.44 \le \beta < 1.05$
+    \item $0.75 < P \le 1.0$ and $-1.4 \le \beta < 1.05$
+    \item $1.0 < P \le 1.25$ and $-1.35 \le \beta < 1.03$
+    \item $1.25 < P \le 1.5$ and $-1.35 \le \beta < 0.95$
+    \item $1.5 < P \le 1.75$ and $-1.35 \le \beta < 0.87$
+    \item $1.75 < P \le 2.0$ and $-1.25 \le \beta < 0.68$
+    \item $2.0 < P \le 2.25$ and $-0.95 \le \beta < 0.65$
+    \item $2.25 < P \le 2.5$, $-1.05 \le \beta < 0.61$ and $m^2 < 0.5$
+    \item $2.5 < P \le 2.7$, $-1.05 \le \beta < 0.61$ and $m^2 < 0.4$
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{$\pi^{-}$ identification}            
+
+Just as $\pi^{-}$ must satisfy the following requeriments:
+
+
+\textbf{Time correction.} Depends on the particle.
+\begin{equation}
+    \beta = \left(\frac{l_{SC}}{30} - t_{SC}\right)_e - \left(\frac{l_{SC}}{30} \sqrt{\frac{M^2}{P^2} + 1} - t_{SC} \right)_{k} - 0.08
+\end{equation} 
+    
+    
+    \begin{itemize}
+        \item $ charge = -1 $
+        \item $ 0 < Status(k) < 100$
+        \item DC status $ > 0 $
+        \item $ E_{tot} < 0.15 \quad\&\quad E_{in} < (0.085 - 0.5 E_{out}) $
+        \item $  $
+        \item $  $
+        \item $  $
+        \item $  $
+        \item $  $
+    \end{itemize}
+    
+
+\textbf{EC fiducial cuts.}
+\begin{equation}
+    40 < U < 400, \quad V < 360, \quad W < 390 \, (\mbox{cm})
+\end{equation} 
+	    
+		if (Etot(k)<0.15 && Ein(k)<0.085-0.5*Eout(k) &&
+		    ( ( (!(StatCC(k)>0 && Nphe(k)>25)) &&
+		       ( 
+			(0<P && P<=0.5 && T4>-0.87 && T4<0.63)
+			||(0.5<P && P<=1.0 && T4>-0.55 && T4<0.37)
+			||(1.0<P && P<=1.5 && T4>-0.55 && T4<0.38)
+			||(1.5<P && P<=2.0 && T4>-0.60 && T4<0.44)
+			||(2.0<P && P<=2.5 && T4>-1.00 && T4<0.45)
+			 )
+			)
+		      ||(2.5<P && P<=3.0 && T4>-1.00 && T4<0.40)
+		      || (3.0<P && T4>-2.00 && T4<0.45)
+		      )
+		    )
+
+
+            
+\section{$\gamma$ identification}
+
+Let's identify photons!
+
+\textbf{Charge.} Must be 0.
+
+\textbf{Momentum.} So far, I've got no momentum cut. Mike requires $P > 0.15$. Could be this one?
+\begin{equation}
+    \frac{\max{(E_{tot}, E_{in} + E_{out})}}{0.273} > 0.1
+\end{equation}
+
+\textbf{EC Fiducial cut.} Here, all three researchers agree.
+\begin{equation}
+    40 < U < 410, \quad 0 < V < 370, \quad 0 < W < 410 \quad (\mbox{cm})
+\end{equation}
+
+\textbf{Time cut on $\beta$.} A $\gamma$ should travel at the speed of light. Orlando uses this:
+\begin{equation}
+    -2.2 < t_{EC} - \frac{l_{EC}}{30} < 1.3
+\end{equation}
+But here's a subtletie. Taya mentions a $t_{start}$ variable, taken from the EVNT bank. While $t_{EC}$ and $l_{EC}$ come from the ECPB bank. And it should correspond to
+\begin{equation}
+    0.935 < \beta < 1.95
+\end{equation}
+Mike requires something simpler.
+\begin{equation}
+    0.95 < \beta < 1.95
+\end{equation}
+So, all three researchers agree.
+
+\textbf{Timing.} Exclusive from Mike. This is the coincide time between the EC and what? Maybe that's $t_{start} = 54$ (ns).
+\begin{equation}
+    \left| \left( t_{EC} - \frac{l_{EC}}{c}\right) - 54 \, \mbox{(ns)} \right| < 3 \times 5.3 (\mbox{ns})
+\end{equation}
+
+\textbf{SC $m^2$.} Exclusive from Mike. With $m^2$ calculated from TOF.
+\begin{equation}
+    -0.041537 < m^2_{\gamma_1} < 0.031435
+\end{equation}
+\begin{equation}
+    -0.044665 < m^2_{\gamma_2} < 0.035156
+\end{equation}
+
+\textbf{Energy correction.} Energy (and target) dependent correction!
+\begin{equation}
+    1.129-0.05793/E-1.0773e-12/(E*E) for C, Pb 
+    1.116-0.09213/E+0.01007/(E*E) for Fe
+\end{equation}
+
+\textbf{Momentum correction.} Using the ECPB bank treatment, studied by Taya and Orlando.
+
+\section{$\omega$ identification}
+
+
+
+
+\section{Binning}
+
+
+

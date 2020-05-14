@@ -1,0 +1,72 @@
+\chapter{Physics Motivation}
+
+\section{DESCRIPCIÓN PROPUESTA}
+
+Los experimentos modernos de física de altas energías buscan descifrar la estructura de la materia al investigar sus constituyentes más fundamentales y sus interacciones. En la actualidad, el Modelo Estándar describe las interacciones electromagnética, débil y fuerte; y la teoría que se encarga de describir las interacciones fuertes se conoce como Cromodinámica Cuántica (o QCD, por sus siglas en inglés). La interacción fuerte se encarga de unir a los protones y neutrones dentro de un núcleo atómico, y también de unir a sus propios constituyentes: los quarks. Toda partícula que está formada por quarks se denomina hadrón. Y dentro de los hadrones se distinguen dos categorías: los bariones, que están formados por tres quarks, y los mesones, conformados por un par quark-antiquark.
+
+QCD aún presenta fenómenos que carecen de explicación. Tales como el confinamiento (la imposibilidad de observar quarks aislados) y la hadronización (el proceso de formación de quarks en hadrones), para los cuales se han formulado varios modelos teóricos \cite{mt1, mt2, mt3}.
+
+Sin embargo, existe un mecanismo para estudiar la formación de hadrones, que es el mismo que fue usado como primera evidencia experimental de la existencia de los quarks. Este mecanismo se conoce como Deep Inelastic Scattering (DIS), cuya reacción es: $l h \rightarrow l' X$, y corresponde a la interacción electromagnética entre un leptón $l$ y un nucleón $h$ mediante el intercambio de un fotón virtual.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=5cm]{dis}
+\end{figure}
+
+Para analizar el problema, es necesario definir diversas variables cinématicas (invariantes de Lorentz). En particular: la variable $\nu$ equivale a la energía perdida por el electrón en su estado final y $Q^2$ corresponde a su transferencia de cuadri-momentum. Aún más información puede obtenerse al medir un hadrón extra en el estado final; a este proceso se le conoce como Semi-Inclusive DIS (SIDIS), y su reacción es la siguiente: $e N \rightarrow e' h X$. Lo que nos provee de nuevas variables cinemáticas: $Z$, que corresponde a la fracción entre la energía del hadrón y $\nu$; y $p_T^2$, que es el momento transversal del hadrón con respecto a la dirección del fotón virtual.
+
+De manera adicional, se pueden realizar eventos SIDIS para blancos nucleares de distinto tamaño, y así determinar como afecta el ambiente nuclear a la producción de hadrones. La cantidad observable que nos permite medir esto se denomina Hadronic Multiplicity Ratio $R^h_A$, y consiste en la razón que hay entre el número de hadrones producidos $N_h$ (normalizado por el número de electrones $N_e$ detectado para cada blanco nuclear) a partir de un blanco nuclear líquido $D$ y un blanco nuclear sólido $A$, en función de distintas variables cinemáticas.
+\begin{equation*}
+    R_h^A (Q^2, \nu, Z, p_T^2) = \frac{\left( \frac{N_h(Q^2, \nu, Z, p_T^2)}{N_e(Q^2, \nu)} \right)_A}{\left( \frac{N_h(Q^2, \nu, Z, p_T^2)}{N_e(Q^2, \nu)} \right)_D}
+\end{equation*}
+
+El primer experimento de este tipo fue realizado en los años 70 en el detector SLAC, donde se observó por primera vez la atenuación $R^h_A$ en la producción de hadrones \cite{slac}, lo que sirvió como evidencia de que el ambiente nuclear sí tiene efecto en la hadronización. Más recientemente, en el detector HERMES del laboratorio DESY en Alemania, se realizaron varios experimentos de SIDIS donde se midió el Multiplicity Ratio de varios hadrones en función de $Q^2$, $\nu$, $Z$ y $p_T^2$, mostrando diversas relaciones y dependencias. \cite{hermes1, hermes2}
+
+El presente análisis se basa en los datos recopilados por un experimento de SIDIS, el experimento EG2 \cite{eg2}, realizado en el detector CLAS (CEBAF Large Acceptance Spectrometer) \cite{clas} en el labotarorio estadounidense Thomas Jefferson Accelerator Facility (o Jefferson Lab). En este experimento se disparó un haz de electrones con energía de 5.015 GeV a un sistema colineal de dos blancos fijos \cite{target}: un blanco nuclear líquido de deuterio y un blanco nuclear sólido que variaba entre Carbono, Hierro o Plomo, selección de blancos hecha para cubrir un amplio rango de tamaños nucleares.
+
+Esta investigación busca determinar el observable $R^h_A$ (en función de las variables cinemáticas $Q^2$, $\nu$, $Z$ y $p_T^2$) de un hadrón en particular, el mesón omega (denominado $\omega$ de aquí en adelante) cuya masa es 782 MeV/$c^2$ \cite{pdg}. El cual se describe como un mesón vectorial, de contenido de quarks $(u \bar{u} + d  \bar{d})/\sqrt{2}$ y con una vida media de aproximadamente $8 \times 10^{-23}$ segundos. Tan breve, que solamente se pueden detectar los productos del estado final de su decaimiento principal: $\omega \rightarrow \pi^+ \pi^{-} \pi^0 \rightarrow  \pi^+ \pi^{-} \gamma \gamma$, el cual tiene un $89\%$ de probabilidad. Para realizar esto se requieren algoritmos de identificación y combinación, aplicación de modelos teóricos, y generación y reconstrucción de eventos físicos. Una vez publicado, este análisis se convertiría en el primer resultado de Multiplicity Ratio del mesón $\omega$ en el mundo, contribuyendo al estudio de la formación de quarks en hadrones.
+
+\section{HIPÓTESIS}
+
+El observable $R^h_A$ del mesón $\omega$ depende del tamaño nuclear y de las variables cinemáticas $Q^2$, $\nu$, $Z$ y $p_T^2$, y sus resultados van a comprobar o descartar diferentes modelos fenomenológicos.
+
+\section{OBJETIVOS}
+
+\begin{itemize}
+    \item \textbf{General}: Evaluar el observable Multiplicity Ratio del mesón $\omega$ en función de diversas variables cinemáticas y tamaños nucleares, e interpretar los resultados en base a predicciones de diversos modelos fenomenológicos.
+    \item \textbf{Específico}: Proporcionar nuevas mediciones de la masa y vida media del mesón $\omega$.
+\end{itemize}
+
+\section{METODOLOGÍA}
+
+Este trabajo corresponde al análisis estadístico y sistemático de los datos recopilados por un experimento de física nuclear. Todo el trabajo se realiza de manera computacional, en donde se emplean argumentos físicos y métodos matemáticos para el filtrado, combinación, corrección y generación de datos.
+
+Como toda investigación científica, la búsqueda y estudio de publicaciones y reportes de análisis previos es primordial. Cabe destacar, además, que como es un proyecto colaborativo, los resultados se discuten semanalmente con el grupo de análisis del experimento EG2 y trimestralmente frente a la colaboración internacional CLAS.
+
+\section{PLAN DE TRABAJO}
+
+\begin{enumerate}
+    \item Filtrado de datos obtenidos por el experimento. En esta tapa se realizan todos los cortes relacionados con la cinemática y resoluciones del detector para identificar toda partícula detectada.
+    \item Algoritmo de combinación. Como el mesón $\omega$ decae tan rápidamente, solo se pueden detectar los productos de su decaimiento. Para esto, se discrimina cada evento con tal de que posea al menos el conjunto de partículas $\lbrace 1 \pi^+,\,1 \pi^-,\,2 \gamma \rbrace$, y así almacenar cada posible candidato de partícula $\omega$.
+    \item Multiplicity Ratio preliminar. Se prosigue a calcular un Multiplicity Ratio sin correcciones de ningún tipo, contando los candidatos de $\omega$ alrededor de la señal de su masa invariante. Los pasos posteriores buscan refinar este resultado.
+    \item Sustracción de background. Se hace un fit al espectro de masa invariante de $\omega$ para distinguir la señal del ruido.
+    \item Corrección de Acceptance. Se generan simulaciones Monte Carlo para corregir todas las irregularidades debido a imperfecciones provocadas por la geometría del detector.
+    \item Correcciones radiativas. Correcciones a la producción de electrones y piones, basadas en estudios teóricos de la electrodinámica cuántica \cite{rc1, rc2}.
+    \item Estimación de errores sistemáticos. Mediante argumentos físicos y acuerdos del grupo de trabajo, las incertezas sistemáticas consisten en la variación de los resultados al modificar sistemáticamente ciertos procedimientos del análisis. Por ejemplo, medir cuánto afecta una distinta identificación del pión neutral al resultado final del $R^h_A$.
+\end{enumerate}
+
+\section{TRABAJO ADELANTADO}
+
+Este trabajo continúa una línea de investigación basada en la hadronización de mesones, entre los cuales se encuentra el detallado estudio realizado por Taisiya Mineeva sobre la electroproducción de piones neutrales $\pi^0$ \cite{tm}, los cuales forman parte del decaimiento de $\omega$ y que a su vez decaen en dos fotones con un $99\%$ de probabilidad ($\pi^0 \rightarrow \gamma \gamma$). Y el trabajo realizado por Orlando Soto sobre el Multiplicity Ratio del mesón $\eta$ \cite{os}, el cual tiene el mismo canal de decaimiento en tres piones ($\eta \rightarrow \pi^+ \pi^{-} \pi^0$), solo que con una probabilidad del $23\%$.
+
+Actualmente, el proyecto se encuentra en su recta final. El filtrado de datos y la combinación de candidatos de $\omega$ están terminados, y los resultados de $R^h_A$ revelan una significativa dependencia del tamaño nuclear, ya sea con o sin sustracción de background, que ha sido uno de los mayores desafíos del análisis, debido a la baja estadística (que aún así es mayor que la del mesón $\eta$). Con respecto a la dependencia de las variables cinemáticas, hasta ahora se observa que no hay dependencia en las variables $Q^2$, $\nu$ y $Z$, y los resultados todavía no son concluyentes para $p_T^2$. Sobre la corrección de Acceptance, hasta la fecha se han generado más de 400 millones de eventos SIDIS con el software de simulaciones. Producción de eventos que continuará hasta que la cantidad de partículas $\omega$ reconstruidas sea 10 veces mayor que los datos, con tal de entregar un resultado preciso. La estimación de correcciones radiativas todavía está pendiente. Y ya se ha comenzado con las estimaciones de errores sistemáticos en torno a distintos cortes del espacio de fase e identificación de partículas.
+
+Por otro lado, en conjunto con Orlando Soto, ya ha comenzado la redacción del reporte de análisis que describe la hadronización de ambas partículas $\eta$ y $\omega$. Y vale la pena mencionar que parte de estos resultados fueron presentados en persona en las instalaciones de Jefferson Lab el 14 de noviembre de 2019, durante la instancia de la reunión trimestral de la Colaboración CLAS \cite{pres}.
+
+\section{RECURSOS DISPONIBLES}
+
+El software empleado consiste mayoritariamente en: ROOT \cite{root}, una infraestructura de análisis de datos desarrollada por el CERN; los programas específicos de la Colaboración CLAS, usados para filtrado y reconstrucción; y el programa LEPTO \cite{lepto}, que es un simulador Monte Carlo de eventos DIS.
+
+Para el procesamiento de datos y cálculos respectivos, se tienen a disposición mediante acceso remoto dos clústeres que otorgan el poder computacional necesario. Uno de ellos es el CCTVal/UTFSM clúster, que es un centro de datos de Computación de Alto Rendimiento (o HPC, por sus siglas en inglés). Y el otro es el clúster asociado a Jefferson Lab, que corresponde a un ambiente de computación científica especializado en el análisis y almacenamiento masivo de datos.
+
+Además, se cuenta con un equipo de trabajo compuesto por académicos e investigadores expertos en el área, liderados por los académicos de la universidad Hayk Hakobyan y William K. Brooks. Además de toda la red de apoyo que forma parte de la Colaboración CLAS.
