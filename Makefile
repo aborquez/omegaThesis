@@ -39,7 +39,7 @@ LIBS := $(ROOTGLIBS) -lRooFit -lRooFitCore -lMinuit\
 
 PROG := MakePlots GetQuantiles CheckGSIMCards SystPi0Mass SystPi0Compare MakeMR-sim MakePlots-DvsR DiffractiveProcesses\
 	MakeRooFits MakeMR-nbs MakePlots-2D PlotParams MakeMR-bs MakeSimFits SystPi0Fits SystPi0MR SystPi0Diff MakeMR-sn GetElectronNumber\
-	GetSimpleTuple MakePlots-DvsD FilterNCombine DalitzPlots # Test MakePlots_old
+	GetSimpleTuple MakePlots-DvsD FilterNCombine DalitzPlots GetEvents Acceptance # Test MakePlots_old
 LIST := $(addprefix $(BINDIR)/, $(PROG))
 
 .PHONY: all clean
