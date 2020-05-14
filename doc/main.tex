@@ -1,0 +1,78 @@
+\documentclass{usm-thesis}
+
+\usepackage{lipsum}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\definethesis{Omega Hadronization Studies in the Nuclear Medium with the CLAS Spectrometer %Here the title
+}{Andrés Bórquez Cárcamo   %Here the Author
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       BODY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%% ------------------------------
+%%  Generate the title page
+%% ------------------------------
+\thesistitlepage{Advisors: Hayk Hakobyan, Michael H. Wood \& Taisiya Mineeva % Name of the advisor
+}{Trabajo de tesis presentado en cumplimiento parcial de los requisitos para el grado de Magister en Ciencias, mención Física, de la Universidad Técnica Federico Santa María. % The thesis statement
+}{July, 2020 % The date
+}
+
+
+
+%% ------------------------------
+%%  Front matter
+%% ------------------------------
+\frontmatter
+
+
+%% ---------- Committee page
+\committee{
+  {Hayk Hakobyan}{USM},
+  {Michael H. Wood}{CECS},
+  {Taisiya Mineeva}{USM},
+  {William K. Brooks}{USM}
+}
+
+%% ---------- Dedication
+\Dedication{The whole material world seems to me like a newspaper headline\\
+It explicitly demands your attention\\
+And it may even contain some truth\\
+But what's really going on here?\\}
+\newpage
+
+\input{Documents/acknow}   % Acknowledgements
+\input{Documents/abstract} % Abstract
+
+\tableofcontents
+
+\mainmatter
+
+\input{Documents/ch1} % Introduction
+\input{Documents/ch2} % Physics Motivation
+\input{Documents/ch3} % The EG2 experiment
+\input{Documents/ch4} % Event Selection
+\input{Documents/ch5} % MC Simulation
+\input{Documents/ch6} % Radiative Corrections
+\input{Documents/ch7} % Systematic Uncertainties
+\input{Documents/ch8} % Results and discussion
+
+\appendix
+
+\input{Documents/ap1}
+\input{Documents/ap2}
+
+\backmatter
+
+
+%% ---------- Bibliography
+\bibliographystyle{utphys}
+\bibliography{References}
+\addcontentsline{toc}{chapter}{\bibname}
+
+
+\end{document}
